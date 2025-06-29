@@ -1,0 +1,67 @@
+BST (Binary Search Tree)
+____________________________
+m-ary tree (m=2 Binary Tree)
+Criteria to be BST:
+1) At most 2 children
+2) left child value < root node value < right child value
+
+Insert:
+node* insert_BST(node* temp,node* nn){
+    if(temp==NULL){
+        return nn;
+    }else if(nn->data < temp->data){
+        temp->left = insert_BST(temp->left, nn);
+    }else{
+        temp->right = insert_BST(temp->right, nn);
+    }
+    
+    return temp;
+}
+
+temp = root
+BASE: Root 40, return: No, temp->left: 30
+rec1: Root 30, return: No,  temp->left: 25
+rec2: Root NULL, return: Yes, temp->left: 25
+
+
+Delete: After deleting a node, the tree must maintain BST rules.
+1) No left Children = RIGHT
+2) No Right Children = LEFT
+3) No Children = NULL
+4) if the node has Both children: Replace the node with it's in-order succesor
+of its right sub-tree.
+
+FLASH-BACK (TREE TRAVERSAL)
+-->1) In-order:  left,root,right (value-->ascending order sort)
+2) Pre-order: root,left,right
+3) Post-order: left,right,root
+
+in-order: 25,30,40,50,60,65,70,75
+Pre-order: 40,30,25,60,50,70,65,75
+Post-order: 25,30,50,65,75,70,60,40
+
+inorder(node* root){
+    if(root!=NULL){
+        inorder(root->left);
+        printf("%d ",root->data);
+        inorder(root->right);
+    }
+}
+
+base: root 40, print:40
+rec1: root 30, print:30
+rec2: root 25, print:25 
+rec3: root NULL, print:x
+
+base: root 40, print: done, previously
+47) rec1: root 60, print:60 
+45) rec2: root 50, print: 50
+45) rec3: root NULL, print:x
+
+47) rec1: root 70, print:70
+45) rec2: root 65, print: 65
+45) rec3: root NULL, print:x
+
+rec1: root 70, print: done, previously
+47) rec2: root 75, print: 75 
+rec3: root NULL, print:x
